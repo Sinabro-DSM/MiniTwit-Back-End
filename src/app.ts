@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction, Application } from "express";
 import { sequelize } from "./config/config";
 import morgan from "morgan";
+import router from "./routes";
 
 const app: Application = express();
 
@@ -10,6 +11,8 @@ sequelize.sync();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/", router);
 
 app.use((err, req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({
