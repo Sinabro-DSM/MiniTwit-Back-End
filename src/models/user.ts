@@ -20,7 +20,7 @@ User.init(
       primaryKey: true,
       unique: true,
     },
-    userId: {
+    email: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
@@ -63,10 +63,10 @@ Timeline.belongsTo(User, { foreignKey: "userId" });
 User.belongsToMany(Timeline, {
   foreignKey: "userId",
   as: "likePost",
-  through: "like",
+  through: "Like",
 });
 Timeline.belongsToMany(User, {
   foreignKey: "timelineId",
   as: "likeUser",
-  through: "like",
+  through: "Like",
 });
