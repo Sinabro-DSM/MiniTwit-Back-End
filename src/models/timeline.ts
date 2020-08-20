@@ -30,4 +30,4 @@ Timeline.init(
 );
 
 Timeline.hasMany(Image, { foreignKey: "timelineId", sourceKey: "id" });
-Image.belongsTo(Timeline, { foreignKey: "timelineId " });
+Image.belongsTo(Timeline, { foreignKey: "timelineId" });
