@@ -21,7 +21,7 @@ export class tryCatchMiddleware {
       try {
         await cb(req, res, next);
       } catch (e) {
-        res.status(403).json({
+        res.status(404).json({
           message: e.message,
         });
       }
@@ -32,7 +32,7 @@ export class tryCatchMiddleware {
       try {
         await cb(req, res, next);
       } catch (e) {
-        res.status(403).json({
+        res.status(409).json({
           message: e.message,
         });
       }
@@ -43,7 +43,7 @@ export class tryCatchMiddleware {
       try {
         await cb(req, res, next);
       } catch (e) {
-        res.status(403).json({
+        res.status(500).json({
           message: e.message,
         });
       }
