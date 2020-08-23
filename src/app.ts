@@ -4,11 +4,13 @@ import morgan from "morgan";
 import router from "./routes";
 import * as dotenv from "dotenv";
 import path from "path";
+import cors from "cors";
 dotenv.config({ path: path.join(__dirname + "../../.env") });
 
 const app: Application = express();
 
 app.use(morgan("dev"));
+app.use(cors());
 
 sequelize.sync();
 
