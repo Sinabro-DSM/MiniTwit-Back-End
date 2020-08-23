@@ -34,7 +34,6 @@ export const createUser = async (
   password: string,
   nickname: string
 ) => {
-  console.log(id);
   await User.create({ id, email, password, nickname });
 };
 
