@@ -17,3 +17,9 @@ export const writeOne = async (
   }
   res.status(200).json({ message: "성공" });
 };
+
+export const showAll = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
