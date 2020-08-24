@@ -33,9 +33,7 @@
     "nodemailer": "^6.4.11",
     "sequelize": "^6.3.3",
     "sequelize-cli": "^6.2.0",
-    "swagger-ui-express": "^4.1.4",
     "typescript": "^3.9.6",
-    "uuid4": "^2.0.2",
-    "yamljs": "^0.3.0"
+    "uuid4": "^2.0.2"
   }
 }
