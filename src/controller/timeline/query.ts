@@ -3,7 +3,7 @@ import { User } from "../../models/user";
 import { Image } from "../../models/image";
 import uuid4 from "uuid4";
 
-export const findUserById = async (id): Promise<User> => {
+export const findUserById = async (id: string): Promise<User> => {
   try {
     const user: any = User.findOne({ where: { id } });
     return user;
