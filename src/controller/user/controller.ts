@@ -3,7 +3,7 @@ import * as mail from "../../config/mailConfig";
 import * as query from "./query";
 import { mkAccess, mkRefresh } from "./mkToken";
 
-export const emailExist = async (
+export const emailSend = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -11,15 +11,6 @@ export const emailExist = async (
   const email = req.body.email;
   const user: any = await query.findUserByEmail(email);
   if (user) throw new Error("이미 있는 아이디");
-  next();
-};
-
-export const emailSend = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const email = req.body.email;
   const randomNumber = query.mkRandomNumber();
   const mailOption = mail.setMailOption(email, randomNumber);
   mail.transporter.sendMail(mailOption, (err, info) => {
