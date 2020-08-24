@@ -24,3 +24,16 @@ export const search = async (
   const users = await query.searchUser(nickname);
   res.status(200).json({ message: "성공", users });
 };
+
+export const showProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: string = req.params.id;
+  const profile: any = await query.showUser(id);
+  res.status(200).json({
+    message: "성공",
+    profile,
+  });
+};
