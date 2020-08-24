@@ -13,4 +13,12 @@ router.post(
   tryCatchMiddleware.ServerError(Timeline.writeOne)
 );
 
+router.get(
+  "/like/:id",
+  authMiddleware,
+  tryCatchMiddleware.ServerError(Timeline.likeOne)
+);
+
+router.get("/", authMiddleware, tryCatchMiddleware.NotFound(Timeline.showAll));
+
 export default router;
