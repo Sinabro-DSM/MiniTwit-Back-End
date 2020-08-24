@@ -1,7 +1,7 @@
 import { User } from "../../models/user";
 import { Timeline } from "../../models/timeline";
 import { Image } from "../../models/image";
-import sequelize, { Op, fn } from "sequelize";
+import { Op } from "sequelize";
 
 export const findUserById = async (id: string): Promise<User> => {
   try {
@@ -31,9 +31,12 @@ export const showUser = async (id: string): Promise<object> => {
         {
           model: User,
           as: "Followings",
-          attributes: [
-            [sequelize.fn("Count", sequelize.col("FollowingId")), "followings"],
-          ],
+          attributes: ["id", "nickname", "img"],
+        },
+        {
+          model: User,
+          as: "Followers",
+          attributes: ["id", "nickname", "img"],
         },
         {
           model: Timeline,
