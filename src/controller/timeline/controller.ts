@@ -36,7 +36,8 @@ export const showAll = async (
   next: NextFunction
 ) => {
   const id: string = req["decoded"].id;
-  const timelines: any = await query.showAllTimeline(id);
+  const page: string = req.params.page;
+  const timelines: any = await query.showAllTimeline(id, page);
   res.status(200).json({
     message: "성공",
     timelines,
