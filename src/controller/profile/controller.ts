@@ -20,7 +20,7 @@ export const search = async (
   res: Response,
   next: NextFunction
 ) => {
-  const nickname = req.body.nickname;
+  const nickname = req.params.nickname;
   const users = await query.searchUser(nickname);
   res.status(200).json({ message: "성공", users });
 };
