@@ -44,40 +44,51 @@ export const like = async (userId: string, timelineId: string) => {
   await user.addTimeline(timelineId);
 };
 
-export const showAllTimeline = async (id: string): Promise<object> => {
+// export const userJoin = async (id: string): Promise<object> => {
+//   try {
+//     const users = await User.findAll()
+//   }
+// };
+
+export const showAllTimeline = async (
+  id: string,
+  page: any
+): Promise<object> => {
   try {
-    const timeline = await User.findAll({
+    // const users: any = await User.findAll({
+    //   include: [
+    //     {
+    //       model: User,
+    //       as: "Followings",
+    //       attributes: ["id", "nickname", "img"],
+    //     },
+    //   ],
+    //   attributes: ["id", "nickname", "img"],
+    //   where: { id },
+    // });
+    const timeline = await Timeline.findAll({
       include: [
         {
-          model: Timeline,
-          attributes: ["id", "content"],
-          include: [
-            {
-              model: Image,
-              attributes: ["id", "img"],
-            },
-          ],
+          model: User,
+          attributes: ["id", "email", "nickname", "img"],
+          // where: { id },
+          // include: [
+          //     {
+          //     model: User,
+          //     as: "Followings",
+          //     attributes: ["id", "nickname", "img"],
+          //   },
+          // ],
+          order: [["createdAt", "DESC"]],
         },
         {
-          model: User,
-          as: "Followings",
-          attributes: ["id", "nickname", "img"],
-          include: [
-            {
-              model: Timeline,
-              attributes: ["id", "content"],
-              include: [
-                {
-                  model: Image,
-                  attributes: ["id", "img"],
-                },
-              ],
-            },
-          ],
+          model: Image,
+          attributes: ["id", "img"],
         },
       ],
-      attributes: ["id", "nickname", "img"],
-      where: { id },
+      attributes: ["id", "content"],
+      offset: 10 * (page - 1),
+      limit: 10,
     });
     return timeline;
   } catch (e) {
