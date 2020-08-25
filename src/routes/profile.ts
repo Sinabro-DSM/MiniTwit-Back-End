@@ -12,7 +12,7 @@ router.put(
   uploadMiddleware.single("file"),
   tryCatchMiddleware.NotFound(Profile.changeProfile)
 );
-router.get("/search", tryCatchMiddleware.ServerError(Profile.search));
+router.get("/search/:nickname", tryCatchMiddleware.ServerError(Profile.search));
 router.get(
   "/:id",
   authMiddleware,
