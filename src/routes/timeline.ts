@@ -19,6 +19,10 @@ router.get(
   tryCatchMiddleware.ServerError(Timeline.likeOne)
 );
 
-router.get("/", authMiddleware, tryCatchMiddleware.NotFound(Timeline.showAll));
+router.get(
+  "/:page",
+  authMiddleware,
+  tryCatchMiddleware.NotFound(Timeline.showAll)
+);
 
 export default router;
