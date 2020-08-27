@@ -25,4 +25,10 @@ router.get(
   tryCatchMiddleware.NotFound(Timeline.showAll)
 );
 
+router.delete(
+  "/:id",
+  authMiddleware,
+  tryCatchMiddleware.Forbidden(Timeline.deleteOne)
+);
+
 export default router;
