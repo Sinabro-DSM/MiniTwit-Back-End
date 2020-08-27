@@ -5,6 +5,7 @@ import { Image } from "./image";
 export class Timeline extends Model {
   content: string;
   userId: string;
+  createdAt: Date;
 }
 
 Timeline.init(
@@ -25,7 +26,6 @@ Timeline.init(
   },
   {
     sequelize,
-    timestamps: true,
     modelName: "Timeline",
   }
 );
