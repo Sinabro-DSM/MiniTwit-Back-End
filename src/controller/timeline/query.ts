@@ -2,7 +2,7 @@ import { Timeline } from "../../models/timeline";
 import { User } from "../../models/user";
 import { Image } from "../../models/image";
 import uuid4 from "uuid4";
-import { resolveSoa } from "dns";
+import Sequelize from "sequelize";
 
 export const findUserById = async (id: string): Promise<User> => {
   try {
@@ -44,49 +44,33 @@ export const like = async (userId: string, timelineId: string) => {
   await user.addTimeline(timelineId);
 };
 
-// export const userJoin = async (id: string): Promise<object> => {
-//   try {
-//     const users = await User.findAll()
-//   }
-// };
-
 export const showAllTimeline = async (
   id: string,
   page: any
 ): Promise<object> => {
   try {
-    // const users: any = await User.findAll({
-    //   include: [
-    //     {
-    //       model: User,
-    //       as: "Followings",
-    //       attributes: ["id", "nickname", "img"],
-    //     },
-    //   ],
-    //   attributes: ["id", "nickname", "img"],
-    //   where: { id },
-    // });
+    let userIdArr: Array<string> = [id];
+    const user: any = await findUserById(id);
+    console.log(user);
+    const following: Array<object> = await user.getFollowings();
+    for (let i = 0; i < following.length; i++) {
+      userIdArr.push(following[i]["id"]);
+    }
+
     const timeline = await Timeline.findAll({
       include: [
         {
           model: User,
           attributes: ["id", "email", "nickname", "img"],
-          // where: { id },
-          // include: [
-          //     {
-          //     model: User,
-          //     as: "Followings",
-          //     attributes: ["id", "nickname", "img"],
-          //   },
-          // ],
-          order: [["createdAt", "DESC"]],
         },
         {
           model: Image,
           attributes: ["id", "img"],
         },
       ],
-      attributes: ["id", "content"],
+      order: [["createdAt", "DESC"]],
+      where: { userId: { [Sequelize.Op.in]: userIdArr } },
+      attributes: ["id", "content", "createdAt"],
       offset: 10 * (page - 1),
       limit: 10,
     });
