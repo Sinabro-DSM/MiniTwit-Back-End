@@ -25,6 +25,7 @@ Timeline.init(
   },
   {
     sequelize,
+    timestamps: true,
     modelName: "Timeline",
   }
 );
