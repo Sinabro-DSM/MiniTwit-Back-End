@@ -43,3 +43,14 @@ export const showAll = async (
     timelines,
   });
 };
+
+export const deleteOne = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: string = req.params.id;
+  const userId: string = req["decoded"].id;
+  await query.deleteTimeline(id, userId);
+  res.status(200).json({ message: "성공" });
+};
