@@ -9,7 +9,7 @@ export const sequelize = new Sequelize(
     host: config.database.host,
     dialect: "mysql",
     define: {
-      timestamps: false,
+      timestamps: true,
     },
     timezone: "+09:00",
     pool: {
