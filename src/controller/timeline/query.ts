@@ -40,8 +40,8 @@ export const addImg = async (id: string, img: string, timelineId: string) => {
 };
 
 export const like = async (userId: string, timelineId: string) => {
-  const user: any = await findUserById(userId);
-  await user.addTimeline(timelineId);
+  const timeline: any = await Timeline.findOne({ where: { id: timelineId } });
+  await timeline.addUsers(userId);
 };
 
 export const showAllTimeline = async (
@@ -57,7 +57,7 @@ export const showAllTimeline = async (
       userIdArr.push(following[i]["id"]);
     }
 
-    const timeline = await Timeline.findAll({
+    const timeline: any = await Timeline.findAll({
       include: [
         {
           model: User,
@@ -68,14 +68,27 @@ export const showAllTimeline = async (
           attributes: ["id", "img"],
         },
       ],
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
       where: { userId: { [Sequelize.Op.in]: userIdArr } },
       attributes: ["id", "content", "createdAt"],
       offset: 10 * (page - 1),
       limit: 10,
     });
+    for (let i = 0; i < timeline.length; i++) {
+      if (timeline[i].User.id === id) {
+        timeline[i].dataValues.isMine = true;
+      } else {
+        timeline[i].dataValues.isMine = false;
+      }
+    }
     return timeline;
   } catch (e) {
     throw e;
   }
+};
+
+export const deleteTimeline = async (id: string, userId: string) => {
+  const timeline: any = await Timeline.findOne({ where: { id } });
+  if (timeline["userId"] !== userId) throw new Error("자신의 글이 아님");
+  await timeline.destroy();
 };
