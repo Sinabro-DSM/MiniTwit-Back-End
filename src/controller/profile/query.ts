@@ -41,7 +41,7 @@ export const showUser = async (id: string): Promise<object> => {
         },
         {
           model: Timeline,
-          attributes: ["id", "content"],
+          attributes: ["id", "content", "userId"],
           include: [
             {
               model: Image,
@@ -59,7 +59,11 @@ export const showUser = async (id: string): Promise<object> => {
     });
 
     for (let i = 0; i < profile.Timelines.length; i++) {
+      profile.Timelines[i].dataValues.isMine = false;
       profile.Timelines[i].dataValues.isLike = false;
+      if (profile.Timelines[i].userId === id) {
+        profile.Timelines[i].dataValues.isMine = true;
+      }
       for (let j = 0; j < profile.Timelines[i].Likes.length; j++) {
         if (profile.Timelines[i].Likes[j].userId === id) {
           profile.Timelines[i].dataValues.isLike = true;
