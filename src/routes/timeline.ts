@@ -19,6 +19,12 @@ router.get(
   tryCatchMiddleware.ServerError(Timeline.likeOne)
 );
 
+router.delete(
+  "/like/:id",
+  authMiddleware,
+  tryCatchMiddleware.NotFound(Timeline.unLike)
+);
+
 router.get(
   "/:page",
   authMiddleware,
