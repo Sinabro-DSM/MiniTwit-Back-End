@@ -10,9 +10,11 @@ Like.init(
   {
     timelineId: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     userId: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
   },
   {
