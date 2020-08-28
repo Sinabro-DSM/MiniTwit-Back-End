@@ -43,3 +43,12 @@ export const passwordCompare = async (
 ): Promise<boolean> => {
   return await bcrypt.compareSync(password, encodedPassword);
 };
+
+export const findUserById = async (id: string): Promise<User> => {
+  try {
+    const user: any = await User.findOne({ where: { id } });
+    return user;
+  } catch (e) {
+    throw e;
+  }
+};
