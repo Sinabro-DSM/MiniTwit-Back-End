@@ -3,6 +3,7 @@ import Sequelize, { Model } from "sequelize";
 import * as dotenv from "dotenv";
 import path from "path";
 import { Timeline } from "./timeline";
+import { Like } from "./like";
 dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 export class User extends Model {
@@ -59,13 +60,5 @@ User.belongsToMany(User, {
 User.hasMany(Timeline, { foreignKey: "userId", sourceKey: "id" });
 Timeline.belongsTo(User, { foreignKey: "userId" });
 
-User.belongsToMany(Timeline, {
-  foreignKey: "userId",
-  as: "likePost",
-  through: "Like",
-});
-Timeline.belongsToMany(User, {
-  foreignKey: "timelineId",
-  as: "likeUser",
-  through: "Like",
-});
+User.hasMany(Like);
+Like.belongsTo(User);
