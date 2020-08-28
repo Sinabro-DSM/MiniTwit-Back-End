@@ -30,6 +30,17 @@ export const likeOne = async (
   res.status(200).json({ message: "성공" });
 };
 
+export const unLike = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId: string = req["decoded"].id;
+  const timelineId: string = req.params.id;
+  await query.unLike(timelineId, userId);
+  res.status(200).json({ message: "성공" });
+};
+
 export const showAll = async (
   req: Request,
   res: Response,
