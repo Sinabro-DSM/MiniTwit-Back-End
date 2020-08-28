@@ -41,7 +41,7 @@ export const showUser = async (id: string): Promise<object> => {
         },
         {
           model: Timeline,
-          attributes: ["id", "content", "userId"],
+          attributes: ["id", "content", "userId", "createdAt"],
           include: [
             {
               model: Image,
