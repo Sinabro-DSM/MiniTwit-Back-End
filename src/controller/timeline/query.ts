@@ -3,6 +3,7 @@ import { User } from "../../models/user";
 import { Image } from "../../models/image";
 import uuid4 from "uuid4";
 import Sequelize from "sequelize";
+import { Like } from "../../models/like";
 
 export const findUserById = async (id: string): Promise<User> => {
   try {
@@ -40,8 +41,7 @@ export const addImg = async (id: string, img: string, timelineId: string) => {
 };
 
 export const like = async (userId: string, timelineId: string) => {
-  const timeline: any = await Timeline.findOne({ where: { id: timelineId } });
-  await timeline.addUsers(userId);
+  await Like.create({ userId, timelineId });
 };
 
 export const showAllTimeline = async (
@@ -67,18 +67,27 @@ export const showAllTimeline = async (
           model: Image,
           attributes: ["id", "img"],
         },
+        {
+          model: Like,
+          attributes: ["userId"],
+        },
       ],
-      order: [["createdAt", "ASC"]],
+      order: [["createdAt", "DESC"]],
       where: { userId: { [Sequelize.Op.in]: userIdArr } },
       attributes: ["id", "content", "createdAt"],
       offset: 10 * (page - 1),
       limit: 10,
     });
     for (let i = 0; i < timeline.length; i++) {
+      timeline[i].dataValues.isLike = false;
+      timeline[i].dataValues.isMine = false;
       if (timeline[i].User.id === id) {
         timeline[i].dataValues.isMine = true;
-      } else {
-        timeline[i].dataValues.isMine = false;
+      }
+      for (let j = 0; j < timeline[i].Likes.length; j++) {
+        if (timeline[i].Likes[j].userId === id) {
+          timeline[i].dataValues.isLike = true;
+        }
       }
     }
     return timeline;
