@@ -60,5 +60,5 @@ User.belongsToMany(User, {
 User.hasMany(Timeline, { foreignKey: "userId", sourceKey: "id" });
 Timeline.belongsTo(User, { foreignKey: "userId" });
 
-User.hasMany(Like);
-Like.belongsTo(User);
+User.hasMany(Like, { foreignKey: "userId", sourceKey: "id" });
+Like.belongsTo(User, { foreignKey: "userId" });
