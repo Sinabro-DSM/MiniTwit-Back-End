@@ -44,6 +44,16 @@ export const like = async (userId: string, timelineId: string) => {
   await Like.create({ userId, timelineId });
 };
 
+export const unLike = async (timelineId: string, userId: string) => {
+  try {
+    console.log(timelineId, userId);
+    const timeline: any = await Like.findOne({ where: { timelineId, userId } });
+    await timeline.destroy();
+  } catch (e) {
+    throw new Error("좋아요한 글이 아님");
+  }
+};
+
 export const showAllTimeline = async (
   id: string,
   page: any
