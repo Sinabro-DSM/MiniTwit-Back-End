@@ -1,6 +1,7 @@
 import { sequelize } from "../config/config";
 import Sequelize, { Model } from "sequelize";
 import { Image } from "./image";
+import { Like } from "./like";
 
 export class Timeline extends Model {
   content: string;
@@ -32,3 +33,6 @@ Timeline.init(
 
 Timeline.hasMany(Image, { foreignKey: "timelineId", sourceKey: "id" });
 Image.belongsTo(Timeline, { foreignKey: "timelineId" });
+
+Timeline.hasMany(Like);
+Like.belongsTo(Timeline);
