@@ -49,3 +49,14 @@ export const login = async (
     refreshToken,
   });
 };
+
+export const refresh = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: string = req["decoded"].id;
+  const user: any = await query.findUserById(id);
+  const accessToken = await mkAccess(req, user);
+  res.status(200).json({ message: "성공", accessToken });
+};
