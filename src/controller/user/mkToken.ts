@@ -11,7 +11,7 @@ export const mkAccess = async (req: Request, user: object): Promise<string> => {
     },
     secret,
     {
-      expiresIn: "30m",
+      expiresIn: "5m",
     }
   );
   return token;
