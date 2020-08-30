@@ -11,7 +11,6 @@ export const sequelize = new Sequelize(
     define: {
       timestamps: true,
     },
-    timezone: "+09:00",
     pool: {
       max: 30,
       min: 0,
