@@ -25,7 +25,7 @@ export const searchUser = async (nickname: string): Promise<User> => {
   }
 };
 
-export const showUser = async (id: string): Promise<object> => {
+export const showUser = async (id: string, userId: string): Promise<object> => {
   try {
     const profile: any = await User.findOne({
       include: [
@@ -65,12 +65,11 @@ export const showUser = async (id: string): Promise<object> => {
         profile.Timelines[i].dataValues.isMine = true;
       }
       for (let j = 0; j < profile.Timelines[i].Likes.length; j++) {
-        if (profile.Timelines[i].Likes[j].userId === id) {
+        if (profile.Timelines[i].Likes[j].userId === userId) {
           profile.Timelines[i].dataValues.isLike = true;
         }
       }
     }
-    console.log(profile.Timelines);
     return profile;
   } catch (e) {
     throw e;
