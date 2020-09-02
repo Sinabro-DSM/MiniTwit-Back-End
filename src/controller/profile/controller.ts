@@ -31,7 +31,8 @@ export const showProfile = async (
   next: NextFunction
 ) => {
   const id: string = req.params.id;
-  const profile: any = await query.showUser(id);
+  const userId: string = req["decoded"].id;
+  const profile: any = await query.showUser(id, userId);
   res.status(200).json({
     message: "성공",
     profile,
