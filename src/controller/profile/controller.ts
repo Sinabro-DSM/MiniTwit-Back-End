@@ -33,9 +33,11 @@ export const showProfile = async (
   const id: string = req.params.id;
   const userId: string = req["decoded"].id;
   const profile: any = await query.showUser(id, userId);
+  const isFollow: any = await query.isFollow(userId, id);
   res.status(200).json({
     message: "성공",
     profile,
+    isFollow,
   });
 };
 
