@@ -13,6 +13,7 @@ router.put(
   tryCatchMiddleware.NotFound(Profile.changeProfile)
 );
 router.get("/search/:nickname", tryCatchMiddleware.ServerError(Profile.search));
+router.get("/", authMiddleware, tryCatchMiddleware.NotFound(Profile.showMine));
 router.get(
   "/:id",
   authMiddleware,
