@@ -73,6 +73,15 @@ export const showUser = async (id: string, userId: string): Promise<object> => {
   }
 };
 
+export const isFollow = async (id: string, userId: string) => {
+  const user: any = await findUserById(id);
+  const following = await user.getFollowings();
+  for (let i = 0; i < following.length; i++) {
+    if (following[i].id === userId) return true;
+    return false;
+  }
+};
+
 export const showMe = async (id: string): Promise<object> => {
   try {
     const profile: any = await User.findOne({
