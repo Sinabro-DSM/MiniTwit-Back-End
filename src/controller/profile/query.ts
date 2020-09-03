@@ -61,11 +61,56 @@ export const showUser = async (id: string, userId: string): Promise<object> => {
     for (let i = 0; i < profile.Timelines.length; i++) {
       profile.Timelines[i].dataValues.isMine = false;
       profile.Timelines[i].dataValues.isLike = false;
-      if (profile.Timelines[i].userId === id) {
-        profile.Timelines[i].dataValues.isMine = true;
-      }
       for (let j = 0; j < profile.Timelines[i].Likes.length; j++) {
         if (profile.Timelines[i].Likes[j].userId === userId) {
+          profile.Timelines[i].dataValues.isLike = true;
+        }
+      }
+    }
+    return profile;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const showMe = async (id: string): Promise<object> => {
+  try {
+    const profile: any = await User.findOne({
+      include: [
+        {
+          model: User,
+          as: "Followings",
+          attributes: ["id", "nickname", "img"],
+        },
+        {
+          model: User,
+          as: "Followers",
+          attributes: ["id", "nickname", "img"],
+        },
+        {
+          model: Timeline,
+          attributes: ["id", "content", "userId", "createdAt"],
+          include: [
+            {
+              model: Image,
+              attributes: ["id", "img"],
+            },
+            {
+              model: Like,
+              attributes: ["userId"],
+            },
+          ],
+        },
+      ],
+      attributes: ["email", "nickname", "img"],
+      where: { id },
+    });
+
+    for (let i = 0; i < profile.Timelines.length; i++) {
+      profile.Timelines[i].dataValues.isMine = true;
+      profile.Timelines[i].dataValues.isLike = false;
+      for (let j = 0; j < profile.Timelines[i].Likes.length; j++) {
+        if (profile.Timelines[i].Likes[j].userId === id) {
           profile.Timelines[i].dataValues.isLike = true;
         }
       }
