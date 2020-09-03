@@ -38,3 +38,16 @@ export const showProfile = async (
     profile,
   });
 };
+
+export const showMine = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: string = req["decoded"].id;
+  const profile: any = await query.showMe(id);
+  res.status(200).json({
+    message: "성공",
+    profile,
+  });
+};
