@@ -46,7 +46,6 @@ export const like = async (userId: string, timelineId: string) => {
 
 export const unLike = async (timelineId: string, userId: string) => {
   try {
-    console.log(timelineId, userId);
     const timeline: any = await Like.findOne({ where: { timelineId, userId } });
     await timeline.destroy();
   } catch (e) {
