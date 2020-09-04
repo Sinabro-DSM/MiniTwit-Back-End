@@ -8,6 +8,7 @@ export const mkAccess = async (req: Request, user: object): Promise<string> => {
       id: user["id"],
       email: user["email"],
       nickname: user["nickname"],
+      img: user["img"],
     },
     secret,
     {
@@ -27,6 +28,7 @@ export const mkRefresh = async (
       id: user["id"],
       email: user["email"],
       nickname: user["nickname"],
+      img: user["img"],
     },
     secret,
     {
