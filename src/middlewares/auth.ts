@@ -22,8 +22,9 @@ export const refreshMiddleware = (
 ) => {
   const token: any = req.headers["refresh-token"];
   if (!token) return res.status(403).json({ message: "로그인 되어있지 않음" });
-  jwt.verify(token, req.app.get("refresh-secret"), (err) => {
+  jwt.verify(token, req.app.get("refresh-secret"), (err, decoded) => {
     if (err) return res.status(403).json({ message: "로그인 되어있지 않음" });
+    req["decoded"] = decoded;
     next();
   });
 };
